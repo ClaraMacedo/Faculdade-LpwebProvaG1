@@ -1,27 +1,60 @@
 <div class="container">
-    <h1>{{title}}</h1>
-    <p>Os Vingadores (Avengers no original em inglês) são um grupo de super-heróis de história em quadrinhos publicados nos Estados Unidos pela editora Marvel Comics. O grupo também aparece em adaptações da Marvel para cinema, desenho animado e videogames. (Wikipedia)</p>
-    <p>Alguns membros da formação atual (clique para ver detalhes):</p>
-    <div>
-        <app-heroi *ngFor="let vingador of vingadores" [heroi]="vingador" [estahSelecionado]="selecionado && vingador.id == selecionado.id" (onSelecionado)="heroiSelecionado($event)"></app-heroi>
-    </div>
-
-    <div *ngIf="selecionado">
-        {{ selecionado | json }}
-    </div>
+    <h2>Lista de Alunos</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ALuno</th>
+      <th>Frequência</th>
+      <th>Media</th>
+      <th>Situação</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let aluno of alunos">
+      <td>{{aluno.nome}}</td>
+      <td>{{aluno.frequencia}}</td>
+      <td>{{aluno.media}}</td>
+      <td>{{aluno.situacaoFinal}}</td>
+      <td>
+        <button class="btn btn-sm btn-primary" (click)="registrar(aluno)"><i class="fa fa-pencil"></i> Registar Notas/ Frequência</button>
+      </td>
+    </tr>
+  </tbody>
+<label>A média da turma é: {{mediaDaTurma}}</label>
+<button class="btn btn-sm btn-primary" (click)="executar()"><i class="fa fa-pencil"></i> Executar</button>
+</table>
 
 
     <br>
-    <h2>Cadastrar herói</h2>
+    <h2>Cadastrar Notas</h2>
     <form #formCadastro="ngForm" (ngSubmit)="cadastrar()">
         <div class="form-group">
-            <label for="nome">Nome:</label>
+            <label for="nome">Aluno:</label>
             <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="novo.nome" required>
         </div>
         <div class="form-group">
-            <label for="pessoa">Pessoa:</label>
-            <input type="text" class="form-control" id="pessoa" name="pessoa" [(ngModel)]="novo.pessoa" required>
+            <label for="bim1">Nota do  1° Bimestre:</label>
+            <input type="int" class="form-control" id="bim1" name="bim1" [(ngModel)]="novo.bim1" required>
+        </div>
+        <div class="form-group">
+            <label for="bim2">Nota do  2° Bimestre:</label>
+            <input type="int" class="form-control" id="bim2" name="bim2" [(ngModel)]="novo.bim2" required>
+        </div>
+        <div class="form-group">
+            <label for="bim3">Nota do  3° Bimestre:</label>
+            <input type="int" class="form-control" id="bim3" name="bim3" [(ngModel)]="novo.bim3" required>
+        </div>
+        <div class="form-group">
+            <label for="bim4">Nota do  4° Bimestre:</label>
+            <input type="int" class="form-control" id="bim4" name="bim4" [(ngModel)]="novo.bim4" required>
+        </div>
+        <div class="form-group">
+            <label for="bim4">Frequência:</label>
+            <input type="int" class="form-control" id="frequencia" name="frequencia" [(ngModel)]="novo.frequencia" required>
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="!formCadastro.valid">Salvar</button>
+        <button class="btn btn-default" [disabled]="!formCadastro.valid" (click)="limpar(aluno)">Limpar</button>
     </form>
+
 </div>
