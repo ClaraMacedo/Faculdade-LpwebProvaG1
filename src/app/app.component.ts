@@ -82,40 +82,51 @@ export class AppComponent implements OnInit {
         let mediando = 0;
         var resum:number = 0;
         var sum = (number1: number, number2: number) =>  number1 + number2;
+        var todasNotas=[];
 
         for (let i=0; i< this.alunos.length; i++){
             if(this.alunos[i].bim1 == null && this.alunos[i].bim2 == null && this.alunos[i].bim3 == null && this.alunos[i].bim4 == null){
                 this.alunos[i].media = null;
                 if(this.alunos[i].frequencia == null){
-                    this.alunos[i].situacaoFinal == null;
+                    this.alunos[i].situacaoFinal = null;
                 }
             }
             else{
-                if(this.alunos[i].bim1 != null || this.alunos[i].bim1 == 0){
+                todasNotas = [this.alunos[i].bim1, this.alunos[i].bim2,this.alunos[i].bim3, this.alunos[i].bim4];
+                for(let nota of todasNotas){
+                    if(nota != null || nota == 0){
+                        resum = sum(nota.valueOf() , resum);
+                        cont += 1;
+                    }
+
+                }
+                //TODO:: fazendo para as quatro notas
+                //if(this.alunos[i].bim1 != null || this.alunos[i].bim1 == 0){
                     //mediando = mediando + this.alunos[i].bim1;
-                    resum = sum(this.alunos[i].bim1.valueOf() , resum);
-                    cont += 1;
-                }
-                if(this.alunos[i].bim2 != null || this.alunos[i].bim2 == 0){
+                    //resum = sum(this.alunos[i].bim1.valueOf() , resum);
+                    //cont += 1;
+                //}
+                //if(this.alunos[i].bim2 != null || this.alunos[i].bim2 == 0){
                     //mediando = mediando + this.alunos[i].bim2;
-                    resum = sum(this.alunos[i].bim2.valueOf() , resum);
-                    cont += 1;
-                }
-                if(this.alunos[i].bim3 != null || this.alunos[i].bim3 == 0){
+                    //resum = sum(this.alunos[i].bim2.valueOf() , resum);
+                    //cont += 1;
+                //}
+                //if(this.alunos[i].bim3 != null || this.alunos[i].bim3 == 0){
                     //mediando = mediando + this.alunos[i].bim3;
-                    resum = sum(this.alunos[i].bim3.valueOf() , resum);
-                    cont += 1;
-                }
-                if(this.alunos[i].bim4 != null || this.alunos[i].bim4 == 0){
+                    //resum = sum(this.alunos[i].bim3.valueOf() , resum);
+                    //cont += 1;
+                //}
+                //if(this.alunos[i].bim4 != null || this.alunos[i].bim4 == 0){
                     //mediando = mediando + this.alunos[i].bim4;
-                    resum = sum(this.alunos[i].bim3.valueOf() , resum);
-                    cont += 1;
-                }
+                    //resum = sum(this.alunos[i].bim3.valueOf() , resum);
+                    //cont += 1;
+                //}
                 this.alunos[i].media = resum/cont;
                 mediaTurma+= this.alunos[i].media;
                 
                 console.log("Calculando media aluno...", this.alunos[i].media, mediaTurma);
-            }                
+            }
+            todasNotas=[]                
             contando +=1;
             mediando = 0;
             cont = 0;
