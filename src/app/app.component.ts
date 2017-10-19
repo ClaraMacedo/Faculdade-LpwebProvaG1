@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Aluno } from './aluno';
+import { Turma } from './turma';
+import { AlunoTurma } from './alunoTurma';
 import '../assets/css/style.css';
 
 @Component({
@@ -8,36 +10,45 @@ import '../assets/css/style.css';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    title: string;
     alunos: Array<Aluno>;
-    selecionado: Aluno;
-    novo: Aluno = new Aluno('',null, 0, null,null, null, null, null, "N/I");
+    turmas: Array<Turma>;
+    alunoTurma: Array<AlunoTurma>;
+    novoAluno: Aluno = new Aluno(null, '');
+    novaTurma: Turma = new Turma(null, '');
+    novoAlunoTurma: AlunoTurma = new AlunoTurma( new Aluno(null, ''), new Turma(null, ''), null, null, null, null, null, null, "N/I");
     editando = false;
     mediando: number;
     cont= 0;
     mediaDaTurma: number;
-    
+    selecionado: Aluno;  
+    numeroaluno: number = 3;
 
     constructor() {
-        this.title = 'Alunos';
-        this.alunos = [
-            new Aluno('Carol Danvers', 1001, null, null, null, null, null, null, "N/I"),
-            new Aluno('Clint Barton', 1001, 10, 10, 10, 10, null, null, "N/I"),
-            new Aluno('Natasha Romanoff', 1001, null, null, null, null, null, null, "N/I"),
-            new Aluno('Steve Rogers', 1001, null, null, null, null, null, null, "N/I"),
-            new Aluno('Wade Wilson', 1001, 10, 10, 10, 10, null, null, "N/I")
+        this.turmas =[
+            new Turma(1, 'Ciências'),
+            new Turma(2, 'Astro Física')
         ];
+        this.alunos = [
+            new Aluno(1, 'Carol Danvers'),
+            new Aluno(2, 'Clint Barton'),
+            new Aluno(3, 'Natasha Romanoff')
+        ];
+        this.alunoTurma=[
+            new AlunoTurma( this.alunos[0], this.turmas[0],null, null, null, null, null, null, "N/I"),
+            new AlunoTurma( this.alunos[1], this.turmas[1],null, null, null, null, null, null, "N/I"),
+            new AlunoTurma( this.alunos[2], this.turmas[1],10, 10, 10, 10, null, null, "N/I")
+        ]
     }
 
     ngOnInit(): void {
     }
 
-    heroiSelecionado(aluno: Aluno): void {
+    alunoSelecionado(aluno: Aluno): void {
         this.selecionado = aluno;
     }
 
-    encontrar(nome: string): number{
-        console.log("excluindo...", nome);
+    encontrarAluno(nome: string): number{
+        console.log("encontrando...", nome);
         let indice = -1;
         for (let i=0; i< this.alunos.length; i++){
             if(this.alunos[i].nome == nome){
@@ -49,26 +60,95 @@ export class AppComponent implements OnInit {
         return indice;
     }
 
+    encontrarTurma(id: number): number{
+        console.log("encontrando...", id);
+        let indice = -1;
+        for (let i=0; i< this.turmas.length; i++){
+            if(this.turmas[i].numeroTurma == id){
+                indice = i;
+                //i= this.vingadores.length;
+                break;
+            }
+        }
+        return indice;
+    }
+
+    encontrarAlunoTurma(alunoTurma: AlunoTurma): number{
+        console.log("encontrando...", alunoTurma.aluno.nome);
+        let indice = -1;
+        for (let i=0; i< this.alunoTurma.length; i++){
+            if(this.alunoTurma[i] == alunoTurma){
+                indice = i;
+                //i= this.vingadores.length;
+                break;
+            }
+        }
+        return indice;
+    }
+
     cadastrar(): void {
         if(!this.editando){
-            this.alunos.push(new Aluno(this.novo.nome, this.novo.turma, this.novo.bim1, this.novo.bim2, this.novo.bim3, this.novo.bim4, this.novo.media, this.novo.frequencia, this.novo.situacaoFinal));
-            this.novo = new Aluno('',null, null, null,null, null, null, null, "N/I");
+            this.alunos.push(new Aluno(this.novoAluno.idAluno, this.novoAluno.nome));
+            this.novoAluno = new Aluno(null, '');
             console.log("Com inclusão de alunos...");
         }
         else{
-            this.novo = new Aluno('',null, null, null,null, null, null, null, "N/I");
+            this.novoAluno = new Aluno(null, '');
             this.editando = false;
             console.log("Sem inclusão de alunos...");
         }
-        
-        //this.novo = new Aluno('',0, 0, 0, 0, 0, 0, 0, '');
+        this.editando = true;
+        this.cadastrarAlunoTurma();
+        this.calcular();
+        this.mostrarSituacao();
     }
 
-    registrar(aluno: Aluno): void{
-        const indice = this.encontrar(aluno.nome);
+    cadastrarTurma(): void{
+        if(!this.editando){
+            this.turmas.push(new Turma(this.novaTurma.numeroTurma, this.novaTurma.nome, this.novaTurma.alunos));
+            this.novaTurma = new Turma(null, '');
+            console.log("Com inclusão de turmas...");
+        }
+        else{
+            this.turmas.push(new Turma(this.novaTurma.numeroTurma, this.novaTurma.nome, this.novaTurma.alunos));
+            this.editando = false;
+            console.log("Sem inclusão de turmas...");
+        }
+        this.editando = true;
+        this.calcular();
+        this.mostrarSituacao();
+    }
+    cadastrarAlunoTurma():void {
+        if(!this.editando){
+            this.alunoTurma.push(new AlunoTurma(this.novoAlunoTurma.aluno, this.novoAlunoTurma.turma, this.novoAlunoTurma.bim1, this.novoAlunoTurma.bim2, this.novoAlunoTurma.bim3, this.novoAlunoTurma.bim4, this.novoAlunoTurma.media, this.novoAlunoTurma.frequencia, this.novoAlunoTurma.situacaoFinal))
+            this.novoAlunoTurma = new AlunoTurma( new Aluno(null, ''), new Turma(null, ''), null, null, null, null, null, null, "N/I");
+            console.log("Com inclusão de alunos na turma...");
+        }
+        else{
+            this.novoAlunoTurma = new AlunoTurma( new Aluno(null, ''), new Turma(null, ''), null, null, null, null, null,null, "N/I");
+            this.editando = false;
+            console.log("Sem inclusão de alunos na turma...");
+        }
+        
+        this.calcular();
+        this.mostrarSituacao();
+    }
 
+    registrarAluno(alunoTurma: AlunoTurma): void{
+        const indice = this.encontrarAlunoTurma(alunoTurma);
+        const indice1 = this.encontrarAluno(alunoTurma.aluno.nome);
         if(indice !== -1){
-            this.novo = this.alunos[indice];
+            this.novoAlunoTurma = this.alunoTurma[indice];
+            this.novoAluno = this.alunos[indice1];
+            this.editando = true;
+            console.log("Registrar...");
+        }
+    }
+
+    registrarTurma(turma: Turma): void{
+        const indice = this.encontrarTurma(turma.numeroTurma);
+        if(indice !== -1){
+            this.novaTurma = this.turmas[indice];
             this.editando = true;
             console.log("Registrar...");
         }
@@ -84,15 +164,15 @@ export class AppComponent implements OnInit {
         var sum = (number1: number, number2: number) =>  number1 + number2;
         var todasNotas=[];
 
-        for (let i=0; i< this.alunos.length; i++){
-            if(this.alunos[i].bim1 == null && this.alunos[i].bim2 == null && this.alunos[i].bim3 == null && this.alunos[i].bim4 == null){
-                this.alunos[i].media = null;
-                if(this.alunos[i].frequencia == null){
-                    this.alunos[i].situacaoFinal = null;
+        for (let i=0; i< this.alunoTurma.length; i++){
+            if(this.alunoTurma[i].bim1 == null && this.alunoTurma[i].bim2 == null && this.alunoTurma[i].bim3 == null && this.alunoTurma[i].bim4 == null){
+                this.alunoTurma[i].media = null;
+                if(this.alunoTurma[i].frequencia == null){
+                    this.alunoTurma[i].situacaoFinal = 'N/I';
                 }
             }
             else{
-                todasNotas = [this.alunos[i].bim1, this.alunos[i].bim2,this.alunos[i].bim3, this.alunos[i].bim4];
+                todasNotas = [this.alunoTurma[i].bim1, this.alunoTurma[i].bim2,this.alunoTurma[i].bim3, this.alunoTurma[i].bim4];
                 for(let nota of todasNotas){
                     if(nota != null || nota == 0){
                         resum = sum(nota.valueOf() , resum);
@@ -100,31 +180,10 @@ export class AppComponent implements OnInit {
                     }
 
                 }
-                //TODO:: fazendo para as quatro notas
-                //if(this.alunos[i].bim1 != null || this.alunos[i].bim1 == 0){
-                    //mediando = mediando + this.alunos[i].bim1;
-                    //resum = sum(this.alunos[i].bim1.valueOf() , resum);
-                    //cont += 1;
-                //}
-                //if(this.alunos[i].bim2 != null || this.alunos[i].bim2 == 0){
-                    //mediando = mediando + this.alunos[i].bim2;
-                    //resum = sum(this.alunos[i].bim2.valueOf() , resum);
-                    //cont += 1;
-                //}
-                //if(this.alunos[i].bim3 != null || this.alunos[i].bim3 == 0){
-                    //mediando = mediando + this.alunos[i].bim3;
-                    //resum = sum(this.alunos[i].bim3.valueOf() , resum);
-                    //cont += 1;
-                //}
-                //if(this.alunos[i].bim4 != null || this.alunos[i].bim4 == 0){
-                    //mediando = mediando + this.alunos[i].bim4;
-                    //resum = sum(this.alunos[i].bim3.valueOf() , resum);
-                    //cont += 1;
-                //}
-                this.alunos[i].media = resum/cont;
-                mediaTurma+= this.alunos[i].media;
+                this.alunoTurma[i].media = resum/cont;
+                mediaTurma+= this.alunoTurma[i].media;
                 
-                console.log("Calculando media aluno...", this.alunos[i].media, mediaTurma);
+                console.log("Calculando media aluno...", this.alunoTurma[i].media, mediaTurma);
             }
             todasNotas=[]                
             contando +=1;
@@ -135,35 +194,35 @@ export class AppComponent implements OnInit {
         }
         this.mediaDaTurma = mediaTurma/contando;
         console.log("Calculando media turma...", this.mediaDaTurma);           
-       
+        this.mostrarSituacao();
     }
 
     mostrarSituacao(): void{
-        for (let i=0; i< this.alunos.length; i++){
+        for (let i=0; i< this.alunoTurma.length; i++){
             const fre = 200;
-            if(this.alunos[i].frequencia <= (fre * 75/100) && this.alunos[i].frequencia != null){
-                this.alunos[i].situacaoFinal= "REPROVADO POR FALTA";
+            if(this.alunoTurma[i].frequencia <= (fre * 75/100) && this.alunoTurma[i].frequencia != null){
+                this.alunoTurma[i].situacaoFinal= "REPROVADO POR FALTA";
+                this.alunoTurma[i].cor="table-danger";
             }
             else{
-                if(this.alunos[i].media >= 7){
-                this.alunos[i].situacaoFinal= "APROVADO";
+                if(this.alunoTurma[i].media >= 7){
+                this.alunoTurma[i].situacaoFinal= "APROVADO";
+                this.alunoTurma[i].cor="table-success";
                 }
                 else{
-                    if(this.alunos[i].media < 7 && this.alunos[i].media != null)
+                    if(this.alunoTurma[i].media < 7 && this.alunoTurma[i].media != null)
                     {
-                     this.alunos[i].situacaoFinal= "REPROVADO";
+                     this.alunoTurma[i].situacaoFinal= "REPROVADO";
+                     this.alunoTurma[i].cor="table-danger";
                     }
                     else{
-                        this.alunos[i].situacaoFinal= "N/I";
+                        this.alunoTurma[i].situacaoFinal= "N/I";
                     }
                 }
             }
+            console.log("mostrarSituação...");  
             
         }
     }
 
-    executar(): void{
-        this.calcular();
-        this.mostrarSituacao();
-    }
 }

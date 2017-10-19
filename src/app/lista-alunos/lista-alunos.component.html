@@ -1,0 +1,30 @@
+<div class="col">
+    <h2>Lista de Alunos</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Aluno</th>
+                <th>Turma</th>
+                <th>Frequência</th>
+                <th>Média</th>                
+                <th>Situação Final</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let aluno of alunoTurma">
+                <td>{{aluno.aluno.nome}}</td>
+                <td>{{aluno.turma.nome}}</td>
+                <td>{{aluno.frequencia}}</td>
+                <td>{{aluno.media}}</td>
+                <td class="{{aluno.cor}}">{{aluno.situacaoFinal}}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="registrarAluno(aluno)" title="Fazer Registros">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
