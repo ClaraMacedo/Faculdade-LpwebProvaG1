@@ -1,10 +1,8 @@
 export class Aluno {
-    idAluno: number = null;
     nome: string;
     
 
-    constructor( idAluno: number, nome: string) {
-        this.idAluno = idAluno;
+    constructor( nome: string) {
         this.nome = nome;
     }
 }

@@ -12,16 +12,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let aluno of alunoTurma">
+            <tr class="{{aluno.cor}}" *ngFor="let aluno of alunoTurma">
                 <td>{{aluno.aluno.nome}}</td>
                 <td>{{aluno.turma.nome}}</td>
                 <td>{{aluno.frequencia}}</td>
                 <td>{{aluno.media}}</td>
-                <td class="{{aluno.cor}}">{{aluno.situacaoFinal}}</td>
+                <td >{{aluno.situacaoFinal}}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" (click)="registrarAluno(aluno)" title="Fazer Registros">
+                    <button class="btn btn-primary btn-sm" (click)="registrarAlunoTurma(aluno)" title="Fazer Registros">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
+                    <button class="btn btn-danger btn-sm" (click)="excluirAluno(aluno)" title="Deletar Aluno">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
                 </td>
             </tr>
         </tbody>

@@ -13,7 +13,7 @@ export class AlunoTurma {
     situacaoFinal: string;
     cor: string;
 
-    constructor( aluno: Aluno, turma: Turma, bim1: number, bim2: number, bim3: number, bim4: number, media?: number, frequencia?: number, situacaoFinal?: string, cor?: string) {
+    constructor( aluno: Aluno, turma: Turma, bim1?: number, bim2?: number, bim3?: number, bim4?: number, media?: number, frequencia?: number, situacaoFinal?: string, cor?: string) {
         this.aluno = aluno;
         this.turma = turma;
         this.bim1 = bim1;

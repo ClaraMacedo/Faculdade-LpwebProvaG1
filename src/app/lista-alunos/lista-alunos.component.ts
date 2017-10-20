@@ -16,11 +16,17 @@ export class ListaAlunosComponent implements OnInit {
  @Output()
    onRegistrar = new EventEmitter<AlunoTurma>();
 
+@Output()
+  onExcluir = new EventEmitter<AlunoTurma>();
   constructor() { }
 
   ngOnInit() {
   }
-  registrarAluno(aluno: AlunoTurma): void{
+  registrarAlunoTurma(aluno: AlunoTurma): void{
     this.onRegistrar.emit(aluno);
+  }
+
+  excluirAluno(aluno: AlunoTurma): void{
+    this.onExcluir.emit(aluno);
   }
 }
