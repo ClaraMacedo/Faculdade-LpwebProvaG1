@@ -145,7 +145,7 @@ export class AppComponent implements OnInit {
         
         this.mostrarSituacao();
     }
-
+//estou mudando aqui
     
 //
     //RegistarAlunoTurma(turma : string, aluno: string){
