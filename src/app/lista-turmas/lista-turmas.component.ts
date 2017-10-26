@@ -12,14 +12,21 @@ export class ListaTurmasComponent implements OnInit {
   @Input()
   turmas: Array<Turma>;
 
- @Output()
-   onRegistrar = new EventEmitter<Turma>();
+  @Output()
+  onRegistrar = new EventEmitter<Turma>();
 
-  constructor() { }
+@Output()
+onExcluir = new EventEmitter<Turma>();
 
-  ngOnInit() {
-  }
-  registrarTurma(turma: Turma): void{
-    this.onRegistrar.emit(turma);
-  }
+ constructor() { }
+
+ ngOnInit() {
+ }
+ registrarTurma(turma: Turma): void{
+   this.onRegistrar.emit(turma);
+ }
+
+ excluirTurma(turma: Turma): void{
+   this.onExcluir.emit(turma);
+ }
 }
