@@ -8,13 +8,13 @@
     
     <div class="col">
         <h2>Cadastrar Turmas</h2>
-        <form #formCadastro="ngForm" (ngSubmit)="cadastrarTurma()">
+        <form #formCadastroTurma="ngForm" (ngSubmit)="cadastrarTurma()">
             <div class="form-group">
                 <label for="nome">Nome:</label>
                 <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="novaTurma.nome" required>
             </div>
             <button type="submit" class="btn btn-primary" [disabled]="!formCadastro.valid">Salvar</button>
-            <button class="btn btn-default" [disabled]="!formCadastro.valid" (click)="limpar()">Limpar</button>
+            <button type="reset" ng-click="resetForm(formCadastroTurma)" class="btn btn-default" [disabled]="!formCadastroTurma.valid">Limpar</button>
         </form>
     </div>
     </div>

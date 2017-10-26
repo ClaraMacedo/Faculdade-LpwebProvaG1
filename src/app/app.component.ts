@@ -97,8 +97,8 @@ export class AppComponent implements OnInit {
 
     cadastrar(): void {
         if(!this.editando){
-            
-            this.alunos.push(new Aluno(this.novoAluno.idAluno, this.novoAluno.nome));
+            const novoId: number = this.alunos.length + 1;
+            this.alunos.push(new Aluno(novoId, this.novoAluno.nome));
             this.novoAluno = new Aluno(null, '');
             console.log("Com inclusão de alunos...");
         }
@@ -116,12 +116,12 @@ export class AppComponent implements OnInit {
 
     cadastrarTurma(): void{
         if(!this.editando){
-            this.turmas.push(new Turma(this.novaTurma.numeroTurma, this.novaTurma.nome, this.novaTurma.alunos));
+            const novoId: number = this.turmas.length + 1;
+            this.turmas.push(new Turma(novoId, this.novaTurma.nome, this.novaTurma.alunos));
             this.novaTurma = new Turma(null, '');
             console.log("Com inclusão de turmas...");
         }
         else{
-
             const novoId: number = this.turmas.length + 1;
             this.turmas.push(new Turma(novoId, this.novaTurma.nome, this.novaTurma.alunos));
             this.editando = false;
