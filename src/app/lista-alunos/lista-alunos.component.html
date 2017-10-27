@@ -1,0 +1,33 @@
+<div class="col">
+    <h2>Lista de Alunos da Turma: {{turma.numeroTurma}} - {{turma.nome}}</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Aluno</th>
+                <th>Turma</th>
+                <th>Frequência</th>
+                <th>Média</th>                
+                <th>Situação Final</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="{{aluno.cor}}"  *ngFor="let aluno of alunoTurma">
+                <td *ngIf="(aluno.turma == turma)">{{aluno.aluno.nome}}</td>
+                <td *ngIf="(aluno.turma == turma)">{{aluno.turma.nome}}</td>
+                <td *ngIf="(aluno.turma == turma)">{{aluno.frequencia}}</td>
+                <td *ngIf="(aluno.turma == turma)">{{aluno.media}}</td>
+                <td *ngIf="(aluno.turma == turma)">{{aluno.situacaoFinal}}</td>
+                <td *ngIf="(aluno.turma == turma)">
+                    <button class="btn btn-primary btn-sm" (click)="registrarAluno(aluno)" title="Fazer Registros">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="excluirAluno(aluno)" title="Deletar Aluno">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
