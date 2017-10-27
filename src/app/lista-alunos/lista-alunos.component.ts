@@ -13,6 +13,9 @@ export class ListaAlunosComponent implements OnInit {
   @Input()
   alunoTurma: Array<AlunoTurma>; 
 
+  @Input()
+  turma: Turma;
+
  @Output()
    onRegistrar = new EventEmitter<AlunoTurma>();
 

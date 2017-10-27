@@ -54,10 +54,12 @@
     </div>
     
     <div class="row">
-
-        <app-lista-alunos [alunoTurma]="alunoTurma" (onRegistrar)="registrarAluno($event)" (onExcluir)="excluirAluno($event)"></app-lista-alunos>
-
-        <div class="col">
+        <div class="col span6">
+        <div class = "col span3" *ngFor="let turma of turmas">        
+            <app-lista-alunos [turma]="turma" [alunoTurma]="alunoTurma"  (onRegistrar)="registrarAluno($event)" (onExcluir)="excluirAluno($event)"></app-lista-alunos>
+        </div>
+        </div>
+        <div class="col span6">
             <h2>Cadastrar Alunos e Notas</h2>
             <form #formCadastroAluno="ngForm" (ngSubmit)="cadastrar()">
                 <div class="form-group">
